@@ -1,20 +1,17 @@
 package pe.inpe.ms_internos.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistroInternoRequestDTO {
+public class EgresoRequestDTO {
 
-    private Long idInterno;
-    private Long idInstitutoSede;
-    private Long tipoRegistroId;
-    private String observaciones;
+    @NotBlank(message = "El motivo de egreso es obligatorio")
+    private String motivo;
 }

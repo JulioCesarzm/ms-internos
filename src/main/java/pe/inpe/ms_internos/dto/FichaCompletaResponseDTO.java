@@ -21,25 +21,25 @@ public class FichaCompletaResponseDTO {
     private LocalDate fechaIngreso;
     private Boolean estado;
 
-    // Datos personales (de ms-persona)
+    // Datos personales de ms-persona
     private PersonaResumenDTO persona;
 
-    // Ubicación actual
+    // Ubicacion actual
     private InternoUbicacionResponseDTO ubicacionActual;
 
-    // Clasificación actual
+    // Clasificacion actual
     private ClasificacionInternoResponseDTO clasificacionActual;
 
-    // Últimos registros
+    // ultimos registrosd
     private List<RegistroInternoResponseDTO> ultimosRegistros;
 
-    // Resumen judicial (de ms-judicial)
+    // Resumen judicial de ms-judicia
     private ResumenJudicialDTO resumenJudicial;
 
-    // ¿Puede ser trasladado?
+    // Puede ser trasladado?
     private Boolean puedeSerTrasladado;
     private String motivoRestriccion;
 
-    // Metadatos
+    // Fecha
     private LocalDateTime fechaConsulta;
 }

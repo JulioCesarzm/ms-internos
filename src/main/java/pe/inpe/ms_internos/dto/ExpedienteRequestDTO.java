@@ -5,16 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistroInternoRequestDTO {
+public class ExpedienteRequestDTO {
 
     private Long idInterno;
-    private Long idInstitutoSede;
-    private Long tipoRegistroId;
+    private Long estadoProcesalId;
+    private LocalDate fechaInicio;
     private String observaciones;
+    private String descripcionHistorialInicial;
+    private List<Long> delitosIds;
 }

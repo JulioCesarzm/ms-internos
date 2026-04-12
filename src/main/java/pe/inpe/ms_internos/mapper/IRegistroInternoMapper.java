@@ -13,14 +13,12 @@ public interface IRegistroInternoMapper {
 
     @Mapping(target = "idRegistro", ignore = true)
     @Mapping(target = "fechaRegistro", ignore = true)
-    @Mapping(target = "detalles", ignore = true) // Se maneja aparte
     @Mapping(target = "registrationDate", ignore = true)
     @Mapping(target = "registrationUser", ignore = true)
     @Mapping(target = "lastModificationDate", ignore = true)
     @Mapping(target = "lastModificationUser", ignore = true)
     RegistroInterno toEntity(RegistroInternoRequestDTO request);
 
-    @Mapping(target = "detalles", source = "detalles")
     RegistroInternoResponseDTO toResponse(RegistroInterno entity);
 
     List<RegistroInternoResponseDTO> toResponseList(List<RegistroInterno> entities);

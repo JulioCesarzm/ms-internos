@@ -20,7 +20,6 @@ public class RegistroInternoResponseDTO {
     private LocalDateTime fechaRegistro;
     private Long tipoRegistroId;
     private String observaciones;
-    private List<DetalleRegistroResponseDTO> detalles;
 
     private LocalDateTime registrationDate;
     private String registrationUser;

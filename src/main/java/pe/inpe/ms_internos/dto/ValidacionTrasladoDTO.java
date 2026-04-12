@@ -5,16 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegistroInternoRequestDTO {
+public class ValidacionTrasladoDTO {
 
-    private Long idInterno;
-    private Long idInstitutoSede;
-    private Long tipoRegistroId;
-    private String observaciones;
+    private Boolean puedeSerTrasladado;
+    private String motivoRestriccion;
 }
