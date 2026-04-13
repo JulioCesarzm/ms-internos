@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface IInternoService {
 
-    // CRUD básico
     InternoResponseDTO crear(InternoRequestDTO request);
 
     InternoResponseDTO actualizar(Long id, InternoRequestDTO request);
@@ -22,7 +21,6 @@ public interface IInternoService {
 
     void activar(Long id);
 
-    // Consultas específicas
     InternoResponseDTO obtenerPorCodigo(String codigoInterno);
 
     InternoResponseDTO obtenerPorIdPersona(Long idPersona);

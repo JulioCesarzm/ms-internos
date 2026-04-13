@@ -7,12 +7,10 @@ import java.util.List;
 
 public interface IClasificacionInternoService {
 
-    // Gestión de clasificaciones
     ClasificacionInternoResponseDTO asignarClasificacion(ClasificacionInternoRequestDTO request);
 
     ClasificacionInternoResponseDTO cambiarClasificacion(Long idInterno, Long nuevoNivelSeguridadId);
 
-    // Consultas
     ClasificacionInternoResponseDTO obtenerClasificacionActiva(Long idInterno);
 
     List<ClasificacionInternoResponseDTO> obtenerHistorialClasificaciones(Long idInterno);

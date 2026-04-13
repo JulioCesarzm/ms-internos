@@ -28,6 +28,5 @@ public interface IInternoUbicacionRepository extends JpaRepository<InternoUbicac
     @Query("SELECT COUNT(u) FROM InternoUbicacion u WHERE u.idInstitutoSede = :idSede AND u.estadoActual = true")
     Long countInternosEnSede(@Param("idSede") Long idSede);
 
-    // Para reportes de movimientos
     List<InternoUbicacion> findByIdInternoAndFechaInicioBetween(Long idInterno, java.time.LocalDateTime inicio, java.time.LocalDateTime fin);
 }

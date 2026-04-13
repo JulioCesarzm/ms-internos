@@ -12,7 +12,7 @@ import pe.inpe.ms_internos.dto.MandatoActivoDTO;
 
 import java.util.List;
 
-@FeignClient(name="ms-judicial", url="http://localhost:8085")
+@FeignClient(name = "ms-judicial")
 public interface MsJudicialClient {
 
     @PostMapping("/api/v1/expedientes")

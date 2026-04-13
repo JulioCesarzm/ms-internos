@@ -7,12 +7,10 @@ import java.util.List;
 
 public interface IInternoUbicacionService {
 
-    // Gestión de ubicaciones
     InternoUbicacionResponseDTO asignarUbicacion(InternoUbicacionRequestDTO request);
 
     InternoUbicacionResponseDTO cambiarUbicacion(Long idInterno, Long nuevaSedeId, String observaciones);
 
-    // Consultas
     InternoUbicacionResponseDTO obtenerUbicacionActual(Long idInterno);
 
     List<InternoUbicacionResponseDTO> obtenerHistorialUbicaciones(Long idInterno);
@@ -21,6 +19,5 @@ public interface IInternoUbicacionService {
 
     Long contarInternosEnSede(Long idSede);
 
-    // Validaciones
     boolean estaEnSede(Long idInterno, Long idSede);
 }

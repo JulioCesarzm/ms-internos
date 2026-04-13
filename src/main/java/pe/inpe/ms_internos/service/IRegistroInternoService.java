@@ -8,10 +8,8 @@ import java.util.List;
 
 public interface IRegistroInternoService {
 
-    // Registrar movimiento
     RegistroInternoResponseDTO registrar(RegistroInternoRequestDTO request);
 
-    // Consultas
     List<RegistroInternoResponseDTO> obtenerPorInterno(Long idInterno);
 
     List<RegistroInternoResponseDTO> obtenerPorTipo(Long idInterno, Long tipoRegistroId);
@@ -20,6 +18,5 @@ public interface IRegistroInternoService {
 
     List<RegistroInternoResponseDTO> obtenerPorRangoFechas(Long idInterno, LocalDateTime inicio, LocalDateTime fin);
 
-    // Para reportes
     List<RegistroInternoResponseDTO> obtenerIngresosRecientes(Long tipoRegistroId, LocalDateTime desde);
 }

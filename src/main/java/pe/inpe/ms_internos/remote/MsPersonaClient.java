@@ -9,7 +9,7 @@ import pe.inpe.ms_internos.dto.*;
 
 import java.util.List;
 
-@FeignClient(name="ms-persona", url="http://localhost:8094")
+@FeignClient(name="ms-persona")
 public interface MsPersonaClient {
 
     @GetMapping("/api/v1/persona/{id}")

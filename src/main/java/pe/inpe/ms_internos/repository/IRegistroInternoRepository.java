@@ -29,6 +29,5 @@ public interface IRegistroInternoRepository extends JpaRepository<RegistroIntern
     @Query("SELECT r FROM RegistroInterno r WHERE r.idInterno = :idInterno ORDER BY r.fechaRegistro DESC LIMIT 1")
     Optional<RegistroInterno> findUltimoRegistroByInterno(@Param("idInterno") Long idInterno);
 
-    // Para búsqueda de ingresos recientes
     List<RegistroInterno> findByTipoRegistroIdAndFechaRegistroAfter(Long tipoRegistroId, LocalDateTime fecha);
 }

@@ -45,7 +45,6 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
     public InternoResponseDTO registrarIngresoCompleto(IngresoCompletoRequestDTO request) {
         log.info("Iniciando registro de ingreso completo para persona: {}", request.getIdPersona());
 
-        // 1. Validar que la persona existe
         try {
             PersonaResponseDTO personaResponse = personaClient.obtenerPersona(request.getIdPersona()).getResponse();
             PersonaResumenDTO persona = personaClientMapper.toResumenDTO(personaResponse);
@@ -54,7 +53,6 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
             throw new ResourceNotFoundException("Persona no encontrada con ID: " + request.getIdPersona());
         }
 
-        // 2. Validar que la sede existe
         try {
             SedeResponseDTO sede = sedeClient.obtenerSede(request.getIdInstitutoSede()).getResponse();
             log.info("Sede encontrada: {}", sede.getNombre());
@@ -62,7 +60,6 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
             throw new ResourceNotFoundException("Sede no encontrada con ID: " + request.getIdInstitutoSede());
         }
 
-        // 3. Crear interno
         InternoRequestDTO internoRequest = InternoRequestDTO.builder()
                 .idPersona(request.getIdPersona())
                 .codigoInterno(request.getCodigoInterno())
@@ -71,7 +68,6 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
         InternoResponseDTO interno = internoService.crear(internoRequest);
         log.info("Interno creado con ID: {}", interno.getIdInterno());
 
-        // 4. Asignar ubicación inicial
         InternoUbicacionRequestDTO ubicacionRequest = InternoUbicacionRequestDTO.builder()
                 .idInterno(interno.getIdInterno())
                 .idInstitutoSede(request.getIdInstitutoSede())
@@ -79,7 +75,6 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
         ubicacionService.asignarUbicacion(ubicacionRequest);
         log.info("Ubicación inicial asignada: sede {}", request.getIdInstitutoSede());
 
-        // 5. Asignar clasificación (opcional)
         if (request.getNivelSeguridadId() != null) {
             ClasificacionInternoRequestDTO clasificacionRequest = ClasificacionInternoRequestDTO.builder()
                     .idInterno(interno.getIdInterno())
@@ -90,7 +85,6 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
             log.info("Clasificación asignada: nivel {}", request.getNivelSeguridadId());
         }
 
-        // 6. Registrar ingreso en historial
         RegistroInternoRequestDTO registroRequest = RegistroInternoRequestDTO.builder()
                 .idInterno(interno.getIdInterno())
                 .idInstitutoSede(request.getIdInstitutoSede())
@@ -100,7 +94,6 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
         registroService.registrar(registroRequest);
         log.info("Registro de ingreso creado");
 
-        // 7. Asignar rol INTERNO a la persona
         try {
             PersonaRolRequestDTO rolRequest = PersonaRolRequestDTO.builder()
                     .tipoPersonaRolId(RolPersonaConstants.INTERNO)
@@ -113,7 +106,6 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
             log.warn("No se pudo asignar rol INTERNO: {}", e.getMessage());
         }
 
-        // 8. (Opcional) Crear expediente judicial
         if (request.getCrearExpediente() != null && request.getCrearExpediente()) {
             ExpedienteRequestDTO expRequest = ExpedienteRequestDTO.builder()
                     .idInterno(interno.getIdInterno())
@@ -140,10 +132,8 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
     public FichaCompletaResponseDTO obtenerFichaCompleta(Long idInterno) {
         log.info("Obteniendo ficha completa del interno: {}", idInterno);
 
-        // 1. Datos básicos del interno
         InternoResponseDTO interno = internoService.obtenerPorId(idInterno);
 
-        // 2. Datos personales (ms-persona)
         PersonaResumenDTO persona = null;
         try {
             PersonaResponseDTO personaResponse = personaClient.obtenerPersona(interno.getIdPersona()).getResponse();
@@ -157,7 +147,6 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
                     .build();
         }
 
-        // 3. Ubicación actual
         InternoUbicacionResponseDTO ubicacionActual = null;
         try {
             ubicacionActual = ubicacionService.obtenerUbicacionActual(idInterno);
@@ -165,7 +154,6 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
             log.warn("No se pudo obtener ubicación actual: {}", e.getMessage());
         }
 
-        // 4. Clasificación actual
         ClasificacionInternoResponseDTO clasificacionActual = null;
         try {
             clasificacionActual = clasificacionService.obtenerClasificacionActiva(idInterno);
@@ -173,13 +161,10 @@ public class OrquestacionInternoServiceImpl implements IOrquestacionInternoServi
             log.warn("No se pudo obtener clasificación: {}", e.getMessage());
         }
 
-        // 5. Últimos registros
         List<RegistroInternoResponseDTO> ultimosRegistros = registroService.obtenerPorInterno(idInterno);
 
-        // 6. Resumen judicial (ms-judicial)
         ResumenJudicialDTO resumenJudicial = obtenerResumenJudicial(idInterno);
 
-        // 7. Validar si puede ser trasladado
         boolean puedeTrasladar = puedeSerTrasladado(idInterno);
         String motivo = puedeTrasladar ? null : obtenerMotivoRestriccionTraslado(idInterno);
 
