@@ -12,7 +12,7 @@ import pe.inpe.ms_internos.service.IInternoService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/internos")
+@RequestMapping("/api/v1/internos")
 @RequiredArgsConstructor
 public class InternoController {
 
